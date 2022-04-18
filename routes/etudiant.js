@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controller = require("../controllers/niveau");
+const controller = require("../controllers/etudiant");
 
 router.get("/", controller.all);
 router.post("/", controller.create);
