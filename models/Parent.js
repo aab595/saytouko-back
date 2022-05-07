@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema();
 
-const parentSchema = new Schema(
+const parentSchema = new mongoose.Schema(
 	{
 		nom: {
 			type: String,
@@ -13,7 +13,7 @@ const parentSchema = new Schema(
 		},
 		profession: String,
 		enfants: {
-			type: [Schema.Types.ObjectId],
+			type: [mongoose.Types.ObjectId],
 			ref: "Etudiant",
 			required: true,
 		},
@@ -37,10 +37,15 @@ const parentSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		userType: {
+			type: String,
+			enum: ["ADMIN", "PARENT", "PROF", "ETUDIANT"],
+			default: "PARENT",
+		},
 		frequenceFacturation: String,
 		typePaiement: String,
 	},
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model("Parent", parentSchema);
+module.exports = mongoose.model("Parent", parentSchema, "users");

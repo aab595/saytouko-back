@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const appelSchema = new Schema(
+const appelSchema = new mongoose.Schema(
 	{
 		classe: {
-			type: Schema.Types.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: "Classe",
 			required: true,
 		},

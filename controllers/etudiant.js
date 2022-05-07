@@ -3,17 +3,24 @@ const Etudiant = require("../models/Etudiant");
 exports.all = (req, res, next) => {
 	Etudiant.find()
 		.then((etudiants) => {
-			res.status(200).json({
+			if (etudiants.length > 0) {
+				return res.status(200).json({
+					status: "success",
+					payload: etudiants,
+					message: "",
+				});
+			}
+			return res.status(200).json({
 				status: "success",
 				payload: etudiants,
-				message: "",
+				message: "Aucun étudiant n'a été enrégistré !",
 			});
 		})
 		.catch((error) =>
-			res.status(400).json({
+			res.status(500).json({
 				status: "fail",
 				payload: [],
-				message: "Aucun étudiant n'a été enrégistré !",
+				message: error.message,
 			})
 		);
 };

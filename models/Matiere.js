@@ -1,26 +1,17 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const matiereSchema = new Schema(
+const matiereSchema = new mongoose.Schema(
 	{
-		nomClasse: {
+		libelle: {
 			type: String,
 			required: true,
 		},
 		enseignant: {
-			type: Schema.Types.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: "Enseignant",
 			required: true,
 		},
-		noteMax: {
-			type: Number,
-			default: 20,
-		},
-		regroupement: String,
-		nomMatiere: {
-			type: String,
-			required: true,
-		},
+		categorie: String,
 		abreviation: {
 			type: String,
 			required: true,
@@ -29,7 +20,6 @@ const matiereSchema = new Schema(
 			type: Number,
 			required: true,
 		},
-		couleur: String,
 	},
 	{ timestamps: true }
 );

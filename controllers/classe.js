@@ -2,24 +2,33 @@ const Classe = require("../models/Classe");
 
 exports.all = (req, res, next) => {
 	Classe.find()
+		.populate("niveau")
 		.then((classes) => {
-			res.status(200).json({
+			if (classes.length > 0) {
+				return res.status(200).json({
+					status: "success",
+					payload: classes,
+					message: "",
+				});
+			}
+			return res.status(200).json({
 				status: "success",
 				payload: classes,
-				message: "",
+				message: "Aucune classe n'a été enrégistrée !",
 			});
 		})
 		.catch((error) =>
-			res.status(400).json({
+			res.status(500).json({
 				status: "fail",
 				payload: [],
-				message: "Aucune classe n'a été enrégistrée !",
+				message: error.message,
 			})
 		);
 };
 
 exports.single = (req, res, next) => {
 	Classe.findOne({ _id: req.params.id })
+		.populate("niveau")
 		.then((classe) => {
 			res.status(200).json({
 				status: "success",

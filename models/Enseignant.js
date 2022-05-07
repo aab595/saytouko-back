@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const enseignantSchema = new Schema(
+const enseignantSchema = new mongoose.Schema(
 	{
 		nom: {
 			type: String,
@@ -12,7 +11,7 @@ const enseignantSchema = new Schema(
 			required: true,
 		},
 		classes: {
-			type: [Schema.Types.ObjectId],
+			type: [mongoose.Types.ObjectId],
 			ref: "Classe",
 		},
 		dateNaiss: Date,
@@ -48,8 +47,13 @@ const enseignantSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		userType: {
+			type: String,
+			enum: ["ADMIN", "PARENT", "PROF", "ETUDIANT"],
+			default: "PROF",
+		},
 	},
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model("Teacher", enseignantSchema);
+module.exports = mongoose.model("Enseignant", enseignantSchema, "users");

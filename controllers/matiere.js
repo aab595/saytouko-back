@@ -3,17 +3,24 @@ const Matiere = require("../models/Matiere");
 exports.all = (req, res, next) => {
 	Matiere.find()
 		.then((matieres) => {
-			res.status(200).json({
+			if (matieres.length > 0) {
+				return res.status(200).json({
+					status: "success",
+					payload: matieres,
+					message: "",
+				});
+			}
+			return res.status(200).json({
 				status: "success",
 				payload: matieres,
-				message: "",
+				message: "Aucune matière n'a été enrégistrée !",
 			});
 		})
 		.catch((error) =>
-			res.status(400).json({
+			res.status(500).json({
 				status: "fail",
 				payload: [],
-				message: "Aucune matière n'a été enrégistrée !",
+				message: error.message,
 			})
 		);
 };

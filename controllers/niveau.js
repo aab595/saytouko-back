@@ -2,16 +2,25 @@ const Niveau = require("../models/Niveau");
 
 exports.all = (req, res, next) => {
 	Niveau.find()
-		.then((niveaux) =>
-			res
-				.status(200)
-				.json({ status: "success", payload: niveaux, message: "" })
-		)
+		.then((niveaux) => {
+			if (niveaux.length > 0) {
+				return res.status(200).json({
+					status: "success",
+					payload: niveaux,
+					message: "",
+				});
+			}
+			return res.status(200).json({
+				status: "success",
+				payload: niveaux,
+				message: "Aucun niveau n'a été enrégistré !",
+			});
+		})
 		.catch((error) =>
-			res.status(400).json({
+			res.status(500).json({
 				status: "fail",
 				payload: [],
-				message: "Aucun niveau n'a été enrégistré !",
+				message: error.message,
 			})
 		);
 };

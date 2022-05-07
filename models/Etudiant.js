@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const etudiantSchema = new Schema(
+const etudiantSchema = new mongoose.Schema(
 	{
 		nom: {
 			type: String,
@@ -12,7 +11,7 @@ const etudiantSchema = new Schema(
 			required: true,
 		},
 		parent: {
-			type: Schema.Types.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: "Parent",
 			required: true,
 		},
@@ -35,7 +34,7 @@ const etudiantSchema = new Schema(
 			quartier: String,
 		},
 		classe: {
-			type: Schema.Types.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: "Classe",
 		},
 		numeroInscription: String,
@@ -58,8 +57,13 @@ const etudiantSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		userType: {
+			type: String,
+			enum: ["ADMIN", "PARENT", "PROF", "ETUDIANT"],
+			default: "ETUDIANT",
+		},
 	},
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model("Etudiant", etudiantSchema);
+module.exports = mongoose.model("Etudiant", etudiantSchema, "users");

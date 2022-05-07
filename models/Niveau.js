@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const niveauSchema = new Schema(
+const niveauSchema = new mongoose.Schema(
 	{
-		niveau: {
+		libelle: {
 			type: String,
 			unique: true,
 			required: true,

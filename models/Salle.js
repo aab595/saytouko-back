@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const salleSchema = new Schema(
+const salleSchema = new mongoose.Schema(
 	{
 		libelle: {
 			type: String,

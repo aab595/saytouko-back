@@ -2,18 +2,27 @@ const Event = require("../models/Event");
 
 exports.all = (req, res, next) => {
 	Event.find()
+		.populate("matiere")
+		.populate("salle")
 		.then((events) => {
-			res.status(200).json({
+			if (events.length > 0) {
+				return res.status(200).json({
+					status: "success",
+					payload: events,
+					message: "",
+				});
+			}
+			return res.status(200).json({
 				status: "success",
 				payload: events,
-				message: "",
+				message: "Aucune matière n'a été enrégistrée !",
 			});
 		})
 		.catch((error) =>
-			res.status(400).json({
+			res.status(500).json({
 				status: "fail",
 				payload: [],
-				message: "Aucune matière n'a été enrégistrée !",
+				message: error.message,
 			})
 		);
 };
@@ -52,16 +61,13 @@ exports.create = (req, res, next) => {
 			res.status(400).json({
 				status: "fail",
 				payload: [],
-				message: "Impossible d'ajouter la matière !",
+				message: error,
 			})
 		);
 };
 
 exports.edit = (req, res, next) => {
-	Event.updateOne(
-		{ _id: req.params.id },
-		{ ...req.body, _id: req.params.id }
-	)
+	Event.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
 		.then((event) => {
 			res.status(200).json({
 				status: "success",

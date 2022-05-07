@@ -1,22 +1,15 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const eventSchema = new Schema(
+const eventSchema = new mongoose.Schema(
 	{
 		matiere: {
-			type: Schema.Types.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: "Matiere",
 			required: true,
 		},
-		couleur: String,
 		salle: {
-			type: Schema.Types.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: "Salle",
-		},
-		enseignant: {
-			type: Schema.Types.ObjectId,
-			ref: "Enseignant",
-			required: true,
 		},
 		debut: {
 			type: Date,
@@ -26,6 +19,7 @@ const eventSchema = new Schema(
 			type: Date,
 			required: true,
 		},
+		couleur: String,
 	},
 	{ timestamps: true }
 );

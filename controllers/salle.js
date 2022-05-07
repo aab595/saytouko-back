@@ -3,17 +3,24 @@ const Salle = require("../models/Salle");
 exports.all = (req, res, next) => {
 	Salle.find()
 		.then((salles) => {
-			res.status(200).json({
+			if (salles.length > 0) {
+				return res.status(200).json({
+					status: "success",
+					payload: salles,
+					message: "",
+				});
+			}
+			return res.status(200).json({
 				status: "success",
 				payload: salles,
-				message: "",
+				message: "Aucune salle n'a été enrégistrée !",
 			});
 		})
 		.catch((error) =>
-			res.status(400).json({
+			res.status(500).json({
 				status: "fail",
 				payload: [],
-				message: "Aucune salle n'a été enrégistrée !",
+				message: error.message,
 			})
 		);
 };

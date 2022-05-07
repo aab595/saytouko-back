@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema(
+const surveillantSchema = new mongoose.Schema(
 	{
 		nomComplet: {
 			type: String,
@@ -44,8 +44,13 @@ const userSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		userType: {
+			type: String,
+			enum: ["ADMIN", "PARENT", "PROF", "ETUDIANT"],
+			default: "ADMIN",
+		},
 	},
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Surveillant", surveillantSchema, "users");

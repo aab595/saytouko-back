@@ -1,19 +1,19 @@
-const Parent = require("../models/Parent");
+const Surveillant = require("../models/Surveillant");
 
 exports.all = (req, res, next) => {
-	Parent.find()
-		.then((parents) => {
-			if (parents.length > 0) {
+	Surveillant.find()
+		.then((surveillants) => {
+			if (surveillants.length > 0) {
 				return res.status(200).json({
 					status: "success",
-					payload: parents,
+					payload: surveillants,
 					message: "",
 				});
 			}
 			return res.status(200).json({
 				status: "success",
-				payload: parents,
-				message: "Aucun parent n'a été enrégistré !",
+				payload: [],
+				message: "Aucun surveillant n'a été enrégistré !",
 			});
 		})
 		.catch((error) =>
@@ -26,11 +26,11 @@ exports.all = (req, res, next) => {
 };
 
 exports.single = (req, res, next) => {
-	Parent.findOne({ _id: req.params.id })
-		.then((parent) => {
+	Surveillant.findOne({ _id: req.params.id })
+		.then((surveillant) => {
 			res.status(200).json({
 				status: "success",
-				payload: parent,
+				payload: surveillant,
 				message: "",
 			});
 		})
@@ -38,67 +38,67 @@ exports.single = (req, res, next) => {
 			res.status(400).json({
 				status: "fail",
 				payload: [],
-				message: "Parent introuvable !",
+				message: "Surveillant introuvable !",
 			})
 		);
 };
 
 exports.create = (req, res, next) => {
 	delete req.body._id;
-	const parent = new Parent({ ...req.body });
-	parent
+	const surveillant = new Surveillant({ ...req.body });
+	surveillant
 		.save()
-		.then((parent) => {
+		.then((surveillant) => {
 			res.status(201).json({
 				status: "success",
-				payload: parent,
-				message: "Parent bien ajouté !",
+				payload: surveillant,
+				message: "Surveillant bien ajouté !",
 			});
 		})
 		.catch((error) =>
 			res.status(400).json({
 				status: "fail",
 				payload: [],
-				message: "Impossible d'ajouter le parent !",
+				message: "Impossible d'ajouter le surveillant !",
 			})
 		);
 };
 
 exports.edit = (req, res, next) => {
-	Parent.updateOne(
+	Surveillant.updateOne(
 		{ _id: req.params.id },
 		{ ...req.body, _id: req.params.id }
 	)
-		.then((parent) => {
+		.then((surveillant) => {
 			res.status(200).json({
 				status: "success",
-				payload: parent,
-				message: "Parent modifié !",
+				payload: surveillant,
+				message: "Surveillant modifié !",
 			});
 		})
 		.catch((error) =>
 			res.status(400).json({
 				status: "fail",
 				payload: [],
-				message: "Impossible de modifier le parent !",
+				message: "Impossible de modifier le surveillant !",
 			})
 		);
 };
 
 exports.remove = (req, res, next) => {
-	Parent.deleteOne({ _id: req.params.id })
-		.then((parent) => {
+	Surveillant.deleteOne({ _id: req.params.id })
+		.then((surveillant) => {
 			res.status(200).json({
 				status: "success",
-				payload: parent,
-				message: "Parent supprimé !",
+				payload: surveillant,
+				message: "Surveillant supprimé !",
 			});
 		})
 		.catch((error) =>
 			res.status(400).json({
 				status: "fail",
 				payload: [],
-				message: "Impossible de supprimer le parent !",
+				message: "Impossible de supprimer le surveillant !",
 			})
 		);
 };
