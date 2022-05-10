@@ -2,7 +2,7 @@
 	"name": "saytouko-back",
 	"version": "1.0.0",
 	"description": "Backend Implementation for Saytouko Project",
-	"main": "server.js",
+	"main": "index.js",
 	"scripts": {
 		"start": "node server.js",
 		"dev": "nodemon server.js"
